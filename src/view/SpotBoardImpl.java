@@ -7,10 +7,6 @@ import java.util.Iterator;
 
 import javax.swing.JPanel;
 
-import model.SpotBoardIterator;
-import model.SpotBoardTheme;
-import model.SpotListener;
-
 public class SpotBoardImpl extends JPanel implements SpotBoard {
 
 	private static final int DEFAULT_SCREEN_WIDTH = 500;

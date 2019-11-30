@@ -2,8 +2,6 @@ package view;
 
 import java.awt.Color;
 
-import model.SpotListener;
-
 /*
  * Spot
  * 

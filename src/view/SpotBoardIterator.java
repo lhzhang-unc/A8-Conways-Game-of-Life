@@ -1,11 +1,8 @@
-package model;
+package view;
 
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-
-import view.Spot;
-import view.SpotBoard;
 
 public class SpotBoardIterator implements Iterator<Spot> {
 

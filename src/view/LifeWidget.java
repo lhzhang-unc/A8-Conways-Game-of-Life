@@ -8,10 +8,11 @@ import java.awt.FlowLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JToggleButton;
+import javax.swing.border.EmptyBorder;
 
 import controller.LifeController;
 import model.LifeModel;
-import model.SpotBoardTheme;
 
 public class LifeWidget extends JPanel {
 
@@ -21,8 +22,15 @@ public class LifeWidget extends JPanel {
 	private SpotBoardTheme _theme;
 
 	public static final String RESET_COMMAND = "RESET_COMMAND";
+	public static final String RAND_COMMAND = "RAND_COMMAND";
 	public static final String SETTING_COMMAND = "SETTING_COMMAND";
 	public static final String ADVANCE_COMMAND = "ADVANCE_COMMAND";
+	public static final String START_COMMAND = "START_COMMAND";
+	public static final String STOP_COMMAND = "STOP_COMMAND";
+	
+	JToggleButton _startStopButton;
+	
+	private boolean _startStop = true;
 
 	public LifeWidget(LifeController controller) {
 
@@ -40,33 +48,46 @@ public class LifeWidget extends JPanel {
 		add(_board, BorderLayout.CENTER);
 
 		JPanel topMessagePanel = new JPanel();
-		topMessagePanel.setLayout(new FlowLayout());
-		topMessagePanel.add(_message);
+		topMessagePanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+		topMessagePanel.setLayout(new BorderLayout());
+		topMessagePanel.add(_message, BorderLayout.WEST);
+		
+		JButton settingButton = new JButton("Settings");
+		settingButton.setActionCommand(SETTING_COMMAND);
+		settingButton.addActionListener(_controller);
+		topMessagePanel.add(settingButton, BorderLayout.EAST);
+		
 
 		/* Create subpanel for message area and reset button. */
-		JPanel bottomMessagePanel = new JPanel();
-		bottomMessagePanel.setLayout(new FlowLayout());
+		JPanel bottomButtonPanel = new JPanel();
+		bottomButtonPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+		bottomButtonPanel.setLayout(new FlowLayout());
+		
+		JButton randButton = new JButton("Randomly Fill");
+		randButton.setActionCommand(RAND_COMMAND);
+		randButton.addActionListener(_controller);
+		bottomButtonPanel.add(randButton);
 
 		/* Reset button. Add ourselves as the action listener. */
 		JButton resetButton = new JButton("Restart");
 		resetButton.setActionCommand(RESET_COMMAND);
 		resetButton.addActionListener(_controller);
-		bottomMessagePanel.add(resetButton);
+		bottomButtonPanel.add(resetButton);
 
-		JButton settingButton = new JButton("Settings");
-		settingButton.setActionCommand(SETTING_COMMAND);
-		settingButton.addActionListener(_controller);
-		bottomMessagePanel.add(settingButton);
-		
 		JButton advanceButton = new JButton("Advance 1 Tick");
 		advanceButton.setActionCommand(ADVANCE_COMMAND);
 		advanceButton.addActionListener(_controller);
-		bottomMessagePanel.add(advanceButton);
+		bottomButtonPanel.add(advanceButton);
+		
+		_startStopButton = new JToggleButton("Start/Stop");
+		_startStopButton.setActionCommand(START_COMMAND);
+		_startStopButton.addActionListener(_controller);
+		bottomButtonPanel.add(_startStopButton);
 
 		/* Add subpanel in south area of layout. */
 
 		add(topMessagePanel, BorderLayout.NORTH);
-		add(bottomMessagePanel, BorderLayout.SOUTH);
+		add(bottomButtonPanel, BorderLayout.SOUTH);
 
 		/*
 		 * Add ourselves as a spot listener for all of the spots on the spot board.
@@ -101,7 +122,7 @@ public class LifeWidget extends JPanel {
 
 		/* Display game start message. */
 
-		_message.setText("Welcome to Conway's Game of Life.");
+		_message.setText("Welcome to Conway's Game of Life. Set your Pattern");
 	}
 
 	public void recreateBoard() {
@@ -112,6 +133,10 @@ public class LifeWidget extends JPanel {
 		_board.addSpotListener(_controller);
 		this.setCursor(Cursor.getDefaultCursor());
 
+	}
+	
+	public void deselectStartStop() {
+		_startStopButton.setSelected(false);
 	}
 
 }

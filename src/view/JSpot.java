@@ -12,8 +12,6 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
-import model.SpotListener;
-
 
 /*
  * JSpot

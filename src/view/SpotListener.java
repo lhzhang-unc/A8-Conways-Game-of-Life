@@ -1,6 +1,4 @@
-package model;
-
-import view.Spot;
+package view;
 
 /*
  * SpotListener

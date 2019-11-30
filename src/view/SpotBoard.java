@@ -3,8 +3,6 @@ package view;
 
 import java.util.Iterator;
 
-import model.SpotListener;
-
 /* 
  * SpotBoard
  * 
