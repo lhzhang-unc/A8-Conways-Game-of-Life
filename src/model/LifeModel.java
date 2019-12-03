@@ -16,8 +16,8 @@ public class LifeModel {
 	private int _sleepTimer;
 	private boolean[][] _aliveGrid;
 	private HashSet<Point> _aliveSet;
-	private static final int DEFAULT_SCREEN_WIDTH = 700;
-	private static final int DEFAULT_SCREEN_HEIGHT = 700;
+	private static final int DEFAULT_SCREEN_WIDTH = 500;
+	private static final int DEFAULT_SCREEN_HEIGHT = 500;
 	private int _rowHeight;
 	private int _rowWidth;
 	private HashSet<Point> _highlightSet;
