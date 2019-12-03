@@ -5,6 +5,7 @@ import java.awt.FlowLayout;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 import javax.swing.border.EmptyBorder;
@@ -107,6 +108,11 @@ public class LifeWidget extends JPanel {
 	//Deselects the Start/Stop toggle button
 	public void deselectStartStop() {
 		_startStopButton.setSelected(false);
+	}
+	
+	public void promptReset() {
+		_controller.stopGame();
+		JOptionPane.showMessageDialog(this, "Please press the Restart Button to add a new pattern");
 	}
 
 }

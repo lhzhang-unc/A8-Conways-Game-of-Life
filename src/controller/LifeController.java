@@ -72,8 +72,7 @@ public class LifeController implements ActionListener, MouseListener {
 	//Stops any ongoing game and opens a setting dialog
 	public void openSetting() {
 
-		_view.deselectStartStop();
-		_model.setRunning(false);
+		stopGame();
 		JDialog settings = new SettingDialog(this);
 		settings.setSize(250, 400);
 		settings.setLocationRelativeTo(_view);
@@ -83,8 +82,7 @@ public class LifeController implements ActionListener, MouseListener {
 	// Resets and clears the game board and allows patterns to once again be set
 	public void resetGame() {
 
-		_view.deselectStartStop();
-		_model.setRunning(false);
+		stopGame();
 		_model.setSetBoard(true);
 		_model.setAliveGrid(new boolean[_model.getBoardSize()][_model.getBoardSize()]);
 		_model.setAliveSet(new HashSet<Point>());
@@ -114,8 +112,7 @@ public class LifeController implements ActionListener, MouseListener {
 		//Stops the thread and/or does nothing if there are no alive spots
 		if (_model.getAliveSet().isEmpty()) {
 			_view.updateMessage("There are no alive spots");
-			_view.deselectStartStop();
-			_model.setRunning(false);
+			stopGame();
 			return;
 		}
 
@@ -207,7 +204,7 @@ public class LifeController implements ActionListener, MouseListener {
 
 		board.repaint();
 	}
-
+	
 	//Starts or stops the game depending on the state of the toggle button
 	private void StartStop(AbstractButton Source) {
 
@@ -215,9 +212,15 @@ public class LifeController implements ActionListener, MouseListener {
 			Thread lifeRunner = new LifeRunner(this);
 			lifeRunner.start();
 		} else {
-			_model.setRunning(false);
+			stopGame();
 		}
 	}
+	
+	public void stopGame() {
+		_view.deselectStartStop();
+		_model.setRunning(false);
+	}
+
 
 	//Runs the thread using a while loop and a flag
 	public void runThread() {
@@ -241,8 +244,11 @@ public class LifeController implements ActionListener, MouseListener {
 		int rowHeight = _model.getRowHeight();
 		int rowWidth = _model.getRowWidth();
 		//Checks whether the game is in the "set pattern" stage or if the mouse is within the bounds of the board
-		if (!_model.isSetBoard() 
-				|| e.getX() > _model.getBoardSize() * rowWidth
+		if (!_model.isSetBoard()) {
+			_view.promptReset();
+			return;
+		}
+		else if (e.getX() > _model.getBoardSize() * rowWidth
 				|| e.getY() > _model.getBoardSize() * rowHeight) {
 			return;
 		}
