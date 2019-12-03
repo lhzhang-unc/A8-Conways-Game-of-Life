@@ -49,7 +49,7 @@ public class Board extends JPanel {
 				g.fillRect(p.x, p.y, rowWidth, rowHeight);
 			}
 		} catch (Exception e) {
-			//Fuck Off
+			//No
 		}
 //		g.setColor(Color.BLACK);
 //		HashSet<Point> aliveSet = model.getAliveSet();
