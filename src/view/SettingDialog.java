@@ -79,7 +79,7 @@ public class SettingDialog extends JDialog implements ActionListener {
 
 		// Add buttons to the frame (and spaces between buttons)
 		panel.add(Box.createRigidArea(new Dimension(0, 10)));
-		panel.add(new JLabel("Square Dimensions:"));
+		panel.add(new JLabel("Square Dimensions: (10-500)"));
 		panel.add(_sizeSpinner);
 		panel.add(Box.createRigidArea(new Dimension(0, 10)));
 		panel.add(new JLabel("Low Birth Threshold:"));
@@ -94,7 +94,7 @@ public class SettingDialog extends JDialog implements ActionListener {
 		panel.add(new JLabel("High Survive Threshold:"));
 		panel.add(_highSurviveSpinner);
 		panel.add(Box.createRigidArea(new Dimension(0, 10)));
-		panel.add(new JLabel("Sleep Length (ms):"));
+		panel.add(new JLabel("Sleep Length (10-1000ms):"));
 		panel.add(_sleepSpinner);
 		panel.add(Box.createRigidArea(new Dimension(0, 10)));
 		panel.add(_torusMode);
