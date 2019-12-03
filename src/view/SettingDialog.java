@@ -41,11 +41,13 @@ public class SettingDialog extends JDialog implements ActionListener {
 		int lowSurviveThreshold = model.getLowSurviveThreshold();
 		int highSurviveThreshold = model.getHighSurviveThreshold();
 
+		//Creates amd sets the layout of the setting panel
 		JPanel panel = new JPanel();
 		BoxLayout layout = new BoxLayout(panel, BoxLayout.Y_AXIS);
 		panel.setLayout(layout);
 		panel.setBorder(new EmptyBorder(10, 10, 10, 10));
 
+		//Creates the number models for the JSpinners
 		_sizeSpinner = new JSpinner(new SpinnerNumberModel(model.getBoardSize(), // initial value
 				10, // min
 				500, // max
@@ -70,6 +72,7 @@ public class SettingDialog extends JDialog implements ActionListener {
 				0, // min
 				1000, // max
 				1));
+		//Instantiates the torus mode checkbox
 		_torusMode = new JCheckBox("Torus Mode");
 
 		_torusMode.setSelected(model.isTorusMode());
@@ -77,7 +80,7 @@ public class SettingDialog extends JDialog implements ActionListener {
 		JButton okButton = new JButton("OK");
 		okButton.addActionListener(this);
 
-		// Add buttons to the frame (and spaces between buttons)
+		// Add Labels, JSpinners, and JCheckboxes to the frame (and spaces between objects)
 		panel.add(Box.createRigidArea(new Dimension(0, 10)));
 		panel.add(new JLabel("Square Dimensions: (10-500)"));
 		panel.add(_sizeSpinner);
@@ -106,6 +109,8 @@ public class SettingDialog extends JDialog implements ActionListener {
 		this.add(panel);
 	}
 
+	//If the new parameters are acceptible, they are passed to the controller to update the model
+	//Otherwise, they are rejected and the user is prompted as needed
 	@Override
 	public void actionPerformed(ActionEvent e) {
 

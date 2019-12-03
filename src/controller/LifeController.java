@@ -40,6 +40,7 @@ public class LifeController implements ActionListener, MouseListener {
 		return _model;
 	}
 
+	//Switch case statements that trigger methods depending on which button was selected in the view
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
@@ -53,21 +54,22 @@ public class LifeController implements ActionListener, MouseListener {
 			openSetting();
 			break;
 		case LifeWidget.ADVANCE_COMMAND:
-			// Disables ability to set patterns
+			//Changes the message to notify the user that the game is running
 			_view.updateMessage("The Game is Running, Press Restart to select a new pattern");
-			_model.setSetBoard(false);
 			advanceOneTick();
 			break;
 		case LifeWidget.RAND_COMMAND:
 			randPopulate();
 			break;
 		case LifeWidget.START_COMMAND:
+			//Changes the message to notify the user that the game is running
 			_view.updateMessage("The Game is Running, Press Restart to select a new pattern");
 			StartStop((AbstractButton) e.getSource());
 			break;
 		}
 	}
 
+	//Stops any ongoing game and opens a setting dialog
 	public void openSetting() {
 
 		_view.deselectStartStop();
@@ -89,6 +91,7 @@ public class LifeController implements ActionListener, MouseListener {
 		_view.resetBoard();
 	}
 
+	//Updates the model with information returned by the setting dialog
 	public void updateSetting(int boardSize, int lowBirth, int highBirth, int lowSurvive, int highSurvive,
 			int sleepTimer, boolean torusMode) {
 
@@ -105,9 +108,18 @@ public class LifeController implements ActionListener, MouseListener {
 		_view.getBoard().repaint();
 	}
 
+	//Advances the game one move/tick
 	public void advanceOneTick() {
+		
+		//Stops the thread and/or does nothing if there are no alive spots
+		if (_model.getAliveSet().isEmpty()) {
+			_view.updateMessage("There are no alive spots");
+			_view.deselectStartStop();
+			_model.setRunning(false);
+			return;
+		}
 
-		// Scans board and designates which spots survive and which spots die
+		// Scans board and designates which spots survive
 		_model.setSetBoard(false);
 		_model.getAliveSet().clear();
 		int rowHeight = _model.getRowHeight();
@@ -126,6 +138,7 @@ public class LifeController implements ActionListener, MouseListener {
 				}
 			}
 		}
+		//Repaints the board and updates the array that keeps track of the state of all the cells
 		_view.getBoard().repaint();
 		for (int i = 0; i < _model.getBoardSize(); i++) {
 			for (int j = 0; j < _model.getBoardSize(); j++) {
@@ -136,7 +149,6 @@ public class LifeController implements ActionListener, MouseListener {
 				}
 			}
 		}
-
 	}
 
 	// Counts the number of alive pops around (but not including) a spot. Returns
@@ -196,6 +208,7 @@ public class LifeController implements ActionListener, MouseListener {
 		board.repaint();
 	}
 
+	//Starts or stops the game depending on the state of the toggle button
 	private void StartStop(AbstractButton Source) {
 
 		if (Source.getModel().isSelected()) {
@@ -206,6 +219,7 @@ public class LifeController implements ActionListener, MouseListener {
 		}
 	}
 
+	//Runs the thread using a while loop and a flag
 	public void runThread() {
 
 		_model.setRunning(true);
@@ -220,11 +234,13 @@ public class LifeController implements ActionListener, MouseListener {
 		}
 	}
 
+	//Paints a rectangle in the grid location of the mouse click
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		
 		int rowHeight = _model.getRowHeight();
 		int rowWidth = _model.getRowWidth();
+		//Checks whether the game is in the "set pattern" stage or if the mouse is within the bounds of the board
 		if (!_model.isSetBoard() 
 				|| e.getX() > _model.getBoardSize() * rowWidth
 				|| e.getY() > _model.getBoardSize() * rowHeight) {
@@ -245,6 +261,7 @@ public class LifeController implements ActionListener, MouseListener {
 		_view.getBoard().repaint();
 	}
 
+	//The below methods do nothing but must be implemented due to the interface
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// Do nothing

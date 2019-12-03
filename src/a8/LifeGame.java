@@ -11,10 +11,12 @@ import view.LifeWidget;
 
 public class LifeGame {
 
+	//Used to start the game, outside of MVC
 	public static void main(String[] args) {
+		
 		/* Create top level window. */
-
 		JFrame mainFrame = new JFrame();
+		//Prevents resizing the board
 		mainFrame.setResizable(false);
 		mainFrame.setTitle("Conway's Game of Life");
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -24,11 +26,13 @@ public class LifeGame {
 		topPanel.setLayout(new BorderLayout());
 		mainFrame.setContentPane(topPanel);
 
+		//Creates the model, controller, and view in that order
 		LifeModel lifeModel = new LifeModel();
 		LifeController lifeController = new LifeController(lifeModel);
 		LifeWidget LifeWidget = new LifeWidget(lifeController);
 		topPanel.add(LifeWidget, BorderLayout.CENTER);
 
+		//Makes the window visible
 		mainFrame.pack();
 		mainFrame.setVisible(true);
 	}

@@ -33,15 +33,15 @@ public class LifeWidget extends JPanel {
 		_controller = controller;
 		_controller.setView(this);
 
-		/* Create Board and message label. */
-
+		//Creates the board and adds the controller as a listener
 		_board = new Board(_controller);
 		_board.addMouseListener(_controller);
 
-		/* Set layout and place SpotBoard at center. */
+		//Sets the layout and puts the board in the center
 		setLayout(new BorderLayout());
 		add(_board, BorderLayout.CENTER);
 
+		//Creates and arranges the top setting/message bar/panel
 		JPanel topMessagePanel = new JPanel();
 		topMessagePanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 		topMessagePanel.setLayout(new BorderLayout());
@@ -52,7 +52,7 @@ public class LifeWidget extends JPanel {
 		settingButton.addActionListener(_controller);
 		topMessagePanel.add(settingButton, BorderLayout.EAST);
 
-		/* Create subpanel for message area and reset button. */
+		//Creates and arranges the bottom button bar/panel
 		JPanel bottomButtonPanel = new JPanel();
 		bottomButtonPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 		bottomButtonPanel.setLayout(new FlowLayout());
@@ -78,15 +78,15 @@ public class LifeWidget extends JPanel {
 		_startStopButton.addActionListener(_controller);
 		bottomButtonPanel.add(_startStopButton);
 
-		/* Add subpanel in south area of layout. */
-
+		//Adds the top and bottom bars
 		add(topMessagePanel, BorderLayout.NORTH);
 		add(bottomButtonPanel, BorderLayout.SOUTH);
 
-		/* Reset game. */
+		//Tells the controller to reset the game
 		_controller.resetGame();
 	}
 
+	//Updates the displayed message with the text passed in as a parameter
 	public void updateMessage(String text) {
 
 		_message.setText(text);
@@ -97,12 +97,14 @@ public class LifeWidget extends JPanel {
 		return _board;
 	}
 
+	//Resets the board and message
 	public void resetBoard() {
 
 		_board.repaint();
 		_message.setText("Welcome to Conway's Game of Life. Set your Pattern");
 	}
 
+	//Deselects the Start/Stop toggle button
 	public void deselectStartStop() {
 		_startStopButton.setSelected(false);
 	}

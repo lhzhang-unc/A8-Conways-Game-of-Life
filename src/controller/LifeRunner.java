@@ -9,6 +9,7 @@ public class LifeRunner extends Thread {
 		_controller = controller;
 	}
 
+	//Calls the method in the controller to run the game
 	@Override
 	public void run() {
 		_controller.runThread();
