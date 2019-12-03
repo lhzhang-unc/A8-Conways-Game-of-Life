@@ -12,9 +12,7 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JSlider;
 import javax.swing.JSpinner;
-import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.border.EmptyBorder;
 
@@ -75,14 +73,13 @@ public class SettingDialog extends JDialog implements ActionListener {
 		_torusMode = new JCheckBox("Torus Mode");
 
 		_torusMode.setSelected(model.isTorusMode());
-		
 
 		JButton okButton = new JButton("OK");
 		okButton.addActionListener(this);
 
 		// Add buttons to the frame (and spaces between buttons)
 		panel.add(Box.createRigidArea(new Dimension(0, 10)));
-		panel.add(new JLabel("Dimensions:"));
+		panel.add(new JLabel("Square Dimensions:"));
 		panel.add(_sizeSpinner);
 		panel.add(Box.createRigidArea(new Dimension(0, 10)));
 		panel.add(new JLabel("Low Birth Threshold:"));
@@ -120,9 +117,7 @@ public class SettingDialog extends JDialog implements ActionListener {
 		int sleepTimer = (int) _sleepSpinner.getValue();
 		if (lowBirth <= highBirth && lowSurvive <= highSurvive) {
 			this.setVisible(false);
-			_controller.updateSetting(size,
-					lowBirth, highBirth, lowSurvive, highSurvive,
-					sleepTimer,
+			_controller.updateSetting(size, lowBirth, highBirth, lowSurvive, highSurvive, sleepTimer,
 					_torusMode.isSelected());
 		} else {
 			JOptionPane.showMessageDialog(this, "Your lower values are higher than they are supposed to be", "Error",

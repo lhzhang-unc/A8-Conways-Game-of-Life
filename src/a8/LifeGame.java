@@ -1,6 +1,5 @@
 package a8;
 
-
 import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
@@ -16,6 +15,7 @@ public class LifeGame {
 		/* Create top level window. */
 
 		JFrame mainFrame = new JFrame();
+		mainFrame.setResizable(false);
 		mainFrame.setTitle("Conway's Game of Life");
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -24,12 +24,11 @@ public class LifeGame {
 		topPanel.setLayout(new BorderLayout());
 		mainFrame.setContentPane(topPanel);
 
-
 		LifeModel lifeModel = new LifeModel();
 		LifeController lifeController = new LifeController(lifeModel);
 		LifeWidget LifeWidget = new LifeWidget(lifeController);
 		topPanel.add(LifeWidget, BorderLayout.CENTER);
-		
+
 		mainFrame.pack();
 		mainFrame.setVisible(true);
 	}

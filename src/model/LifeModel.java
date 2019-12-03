@@ -1,5 +1,8 @@
 package model;
 
+import java.awt.Point;
+import java.util.HashSet;
+
 public class LifeModel {
 
 	private int _boardSize;
@@ -11,11 +14,17 @@ public class LifeModel {
 	private boolean _torusMode;
 	private boolean _running;
 	private int _sleepTimer;
-
+	private boolean[][] _aliveGrid;
+	private HashSet<Point> _aliveSet;
+	private static final int DEFAULT_SCREEN_WIDTH = 700;
+	private static final int DEFAULT_SCREEN_HEIGHT = 700;
+	private int _rowHeight;
+	private int _rowWidth;
+	private HashSet<Point> _highlightSet;
 
 	public LifeModel() {
-		
-		_boardSize = 10;
+
+		setBoardSize(10);
 		_setBoard = true;
 		_lowBirthThreshold = 2;
 		_highBirthThreshold = 3;
@@ -23,6 +32,9 @@ public class LifeModel {
 		_highSurviveThreshold = 3;
 		_torusMode = false;
 		setSleepTimer(10);
+		_aliveGrid = new boolean[_boardSize][_boardSize];
+		_aliveSet = new HashSet<Point>();
+		setHighlightSet(new HashSet<Point>());
 	}
 
 	public int getBoardSize() {
@@ -31,6 +43,8 @@ public class LifeModel {
 
 	public void setBoardSize(int boardSize) {
 		_boardSize = boardSize;
+		_rowHeight = (int) (LifeModel.getDefaultScreenHeight() / boardSize);
+		_rowWidth = (int) (LifeModel.getDefaultScreenWidth() / boardSize);
 	}
 
 	public boolean isSetBoard() {
@@ -97,6 +111,44 @@ public class LifeModel {
 		_sleepTimer = sleepTimer;
 	}
 
-	
+	public static int getDefaultScreenWidth() {
+		return DEFAULT_SCREEN_WIDTH;
+	}
+
+	public static int getDefaultScreenHeight() {
+		return DEFAULT_SCREEN_HEIGHT;
+	}
+
+	public boolean[][] getAliveGrid() {
+		return _aliveGrid;
+	}
+
+	public void setAliveGrid(boolean[][] aliveGrid) {
+		_aliveGrid = aliveGrid;
+	}
+
+	public HashSet<Point> getAliveSet() {
+		return _aliveSet;
+	}
+
+	public void setAliveSet(HashSet<Point> aliveSet) {
+		_aliveSet = aliveSet;
+	}
+
+	public int getRowHeight() {
+		return _rowHeight;
+	}
+
+	public int getRowWidth() {
+		return _rowWidth;
+	}
+
+	public HashSet<Point> getHighlightSet() {
+		return _highlightSet;
+	}
+
+	public void setHighlightSet(HashSet<Point> highlightSet) {
+		_highlightSet = highlightSet;
+	}
 
 }
