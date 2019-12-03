@@ -110,6 +110,7 @@ public class LifeWidget extends JPanel {
 		_startStopButton.setSelected(false);
 	}
 	
+	//Gives the user a prompt to rest the game if needed
 	public void promptReset() {
 		_controller.stopGame();
 		JOptionPane.showMessageDialog(this, "Please press the Restart Button to add a new pattern");

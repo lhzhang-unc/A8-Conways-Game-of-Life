@@ -216,6 +216,7 @@ public class LifeController implements ActionListener, MouseListener {
 		}
 	}
 	
+	//Stops the game
 	public void stopGame() {
 		_view.deselectStartStop();
 		_model.setRunning(false);
