@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.HashSet;
+import java.util.concurrent.CompletableFuture;
 
 import javax.swing.AbstractButton;
 import javax.swing.JDialog;
@@ -78,11 +79,6 @@ public class LifeController implements ActionListener, MouseListener {
 	public void openSetting() {
 
 		stopGame();
-		if (_model.isThrottled()) {
-			//Triggers prompt if the thread frequency has been throttled
-			_view.involuntaryThrottle();
-			_model.setThrottled(false);
-		}
 		JDialog settings = new SettingDialog(this);
 		settings.setSize(250, 500);
 		settings.setLocationRelativeTo(_view);
@@ -241,6 +237,7 @@ public class LifeController implements ActionListener, MouseListener {
 
 		_model.setRunning(true);
 		while (_model.isRunning()) {
+			
 			advanceOneTick();
 			try {
 				Thread.sleep(_model.getSleepTimer());

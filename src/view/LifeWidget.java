@@ -122,11 +122,4 @@ public class LifeWidget extends JPanel {
 
 		JOptionPane.showMessageDialog(this, "The size change prompted the game to reset");
 	}
-	
-	//Shows message telling user why the delay is now longer
-	public void involuntaryThrottle() {
-
-		JOptionPane.showMessageDialog(this, "The Thread Delay was lengthened to handle Concurrent Execution Exception(s)");
-	}
-
 }
