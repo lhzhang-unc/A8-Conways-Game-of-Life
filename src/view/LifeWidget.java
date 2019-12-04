@@ -118,7 +118,7 @@ public class LifeWidget extends JPanel {
 	
 	public void involuntaryReset() {
 		
-		JOptionPane.showMessageDialog(this, "The setting change prompted the game to reset");
+		JOptionPane.showMessageDialog(this, "The size change prompted the game to reset");
 	}
 
 }

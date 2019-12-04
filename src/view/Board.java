@@ -26,20 +26,23 @@ public class Board extends JPanel {
 		LifeModel model = _controller.getModel();
 		int rowHeight = model.getRowHeight();
 		int rowWidth = model.getRowWidth();
+		
+		int boardHeight = rowHeight * model.getBoardHeight();
+		int boardWidth = rowWidth * model.getBoardWidth();
 
 		g.setColor(Color.gray);
-		g.fillRect(0, 0, LifeModel.getDefaultScreenWidth(), LifeModel.getDefaultScreenHeight());
+		g.drawRect(0, 0, LifeModel.getDefaultScreenWidth(), LifeModel.getDefaultScreenHeight());
 		g.setColor(Color.white);
 		g.fillRect(0, 0, LifeModel.getDefaultScreenWidth(), LifeModel.getDefaultScreenHeight());
 
 		g.setColor(Color.gray);
 
 		for (int i = 0; i < model.getBoardWidth(); i++) {
-			g.drawLine(i * rowWidth, 0, i * rowWidth, LifeModel.getDefaultScreenHeight());
+			g.drawLine(i * rowWidth, 0, i * rowWidth, boardHeight);
 		}
 
 		for (int i = 0; i < model.getBoardHeight(); i++) {
-			g.drawLine(0, i * rowHeight, LifeModel.getDefaultScreenWidth(), i * rowHeight);
+			g.drawLine(0, i * rowHeight, boardWidth, i * rowHeight);
 		}
 
 		g.setColor(Color.BLACK);
