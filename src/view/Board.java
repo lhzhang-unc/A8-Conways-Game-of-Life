@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.util.HashSet;
+import java.util.Iterator;
 
 import javax.swing.JPanel;
 
@@ -51,6 +52,9 @@ public class Board extends JPanel {
 		}
 
 		g.setColor(Color.BLACK);
+		
+		Iterator<Point> it = model.getAliveSet().iterator();
+		
 		try {
 			HashSet<Point> aliveSet = model.getAliveSet();
 			for (Point p : aliveSet) {
@@ -59,7 +63,9 @@ public class Board extends JPanel {
 		} catch (Exception e) {
 			//Catches Concurrent Execution Exception that occurs when the program can't
 			//finish reading the HashSet before it needs to do it again
-			e.printStackTrace();
+			//Handles by throttling the thread execution frequency by 1ms each time it occurs
+			model.setSleepTimer(model.getSleepTimer() + 1);
+			//System.out.println("Concurrent Execution Exception Occurred, Thread slowed by 1ms");
 		}
 
 	}
