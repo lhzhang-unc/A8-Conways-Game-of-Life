@@ -78,6 +78,9 @@ public class LifeController implements ActionListener, MouseListener {
 	public void openSetting() {
 
 		stopGame();
+		if (_model.isThrottled()) {
+			_view.involuntaryThrottle();
+		}
 		JDialog settings = new SettingDialog(this);
 		settings.setSize(250, 500);
 		settings.setLocationRelativeTo(_view);

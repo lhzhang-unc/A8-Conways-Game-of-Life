@@ -106,7 +106,7 @@ public class SettingDialog extends JDialog implements ActionListener {
 		panel.add(new JLabel("High Survive Threshold:"));
 		panel.add(_highSurviveSpinner);
 		panel.add(Box.createRigidArea(new Dimension(0, 10)));
-		panel.add(new JLabel("Sleep Length (10-1000ms):"));
+		panel.add(new JLabel("Thread Delay (10-1000ms):"));
 		panel.add(_sleepSpinner);
 		panel.add(Box.createRigidArea(new Dimension(0, 10)));
 		panel.add(_torusMode);

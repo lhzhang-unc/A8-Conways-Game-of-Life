@@ -24,6 +24,7 @@ public class LifeModel {
 	private int _rowWidth;
 	private int _heightOffset;
 	private int _widthOffset;
+	private boolean _throttled;
 
 	public LifeModel() {
 
@@ -162,6 +163,14 @@ public class LifeModel {
 
 	public int getWidthOffset() {
 		return _widthOffset;
+	}
+
+	public boolean isThrottled() {
+		return _throttled;
+	}
+
+	public void setThrottled(boolean throttled) {
+		_throttled = throttled;
 	}
 
 }

@@ -34,15 +34,15 @@ public class LifeWidget extends JPanel {
 		_controller = controller;
 		_controller.setView(this);
 
-		//Creates the board and adds the controller as a listener
+		// Creates the board and adds the controller as a listener
 		_board = new Board(_controller);
 		_board.addMouseListener(_controller);
 
-		//Sets the layout and puts the board in the center
+		// Sets the layout and puts the board in the center
 		setLayout(new BorderLayout());
 		add(_board, BorderLayout.CENTER);
 
-		//Creates and arranges the top setting/message bar/panel
+		// Creates and arranges the top setting/message bar/panel
 		JPanel topMessagePanel = new JPanel();
 		topMessagePanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 		topMessagePanel.setLayout(new BorderLayout());
@@ -53,7 +53,7 @@ public class LifeWidget extends JPanel {
 		settingButton.addActionListener(_controller);
 		topMessagePanel.add(settingButton, BorderLayout.EAST);
 
-		//Creates and arranges the bottom button bar/panel
+		// Creates and arranges the bottom button bar/panel
 		JPanel bottomButtonPanel = new JPanel();
 		bottomButtonPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 		bottomButtonPanel.setLayout(new FlowLayout());
@@ -79,15 +79,15 @@ public class LifeWidget extends JPanel {
 		_startStopButton.addActionListener(_controller);
 		bottomButtonPanel.add(_startStopButton);
 
-		//Adds the top and bottom bars
+		// Adds the top and bottom bars
 		add(topMessagePanel, BorderLayout.NORTH);
 		add(bottomButtonPanel, BorderLayout.SOUTH);
 
-		//Tells the controller to reset the game
+		// Tells the controller to reset the game
 		_controller.resetGame();
 	}
 
-	//Updates the displayed message with the text passed in as a parameter
+	// Updates the displayed message with the text passed in as a parameter
 	public void updateMessage(String text) {
 
 		_message.setText(text);
@@ -98,27 +98,34 @@ public class LifeWidget extends JPanel {
 		return _board;
 	}
 
-	//Resets the board and message
+	// Resets the board and message
 	public void resetBoard() {
 
 		_board.repaint();
 		_message.setText("Welcome to Conway's Game of Life. Set your Pattern");
 	}
 
-	//Deselects the Start/Stop toggle button
+	// Deselects the Start/Stop toggle button
 	public void deselectStartStop() {
 		_startStopButton.setSelected(false);
 	}
-	
-	//Gives the user a prompt to rest the game if needed
+
+	// Gives the user a prompt to rest the game if needed
 	public void promptReset() {
 		_controller.stopGame();
 		JOptionPane.showMessageDialog(this, "Please press the Restart Button to add a new pattern");
 	}
-	
+
+	//Tells user why the board was reset
 	public void involuntaryReset() {
-		
+
 		JOptionPane.showMessageDialog(this, "The size change prompted the game to reset");
+	}
+	
+	//Shows message telling user why the delay is now longer
+	public void involuntaryThrottle() {
+
+		JOptionPane.showMessageDialog(this, "The Thread Delay was lengthened due to Concurrent Execution Exception(s)");
 	}
 
 }

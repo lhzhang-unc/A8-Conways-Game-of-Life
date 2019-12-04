@@ -65,6 +65,7 @@ public class Board extends JPanel {
 			//finish reading the HashSet before it needs to do it again
 			//Handles by throttling the thread execution frequency by 1ms each time it occurs
 			model.setSleepTimer(model.getSleepTimer() + 1);
+			model.setThrottled(true);
 			//System.out.println("Concurrent Execution Exception Occurred, Thread slowed by 1ms");
 		}
 
