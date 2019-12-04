@@ -81,6 +81,7 @@ public class LifeController implements ActionListener, MouseListener {
 		if (_model.isThrottled()) {
 			//Triggers prompt if the thread frequency has been throttled
 			_view.involuntaryThrottle();
+			_model.setThrottled(false);
 		}
 		JDialog settings = new SettingDialog(this);
 		settings.setSize(250, 500);
