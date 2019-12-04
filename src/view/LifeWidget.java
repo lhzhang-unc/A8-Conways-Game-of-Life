@@ -126,7 +126,7 @@ public class LifeWidget extends JPanel {
 	//Shows message telling user why the delay is now longer
 	public void involuntaryThrottle() {
 
-		JOptionPane.showMessageDialog(this, "The Thread Delay was lengthened due to Concurrent Execution Exception(s)");
+		JOptionPane.showMessageDialog(this, "The Thread Delay was lengthened to handle Concurrent Execution Exception(s)");
 	}
 
 }
