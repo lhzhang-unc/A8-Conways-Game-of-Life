@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 
@@ -59,10 +58,9 @@ public class Board extends JPanel {
 				
 		try {
 			//Fills alive Rectangles
-			//Creates a duplicate of the AliveSet in the model as list to use a for loop to prevent concurrent modification
-			ArrayList<Point> aliveList = new ArrayList<>(model.getAliveSet());
-			for (int i = 0; i < aliveList.size(); i++) {
-				Point p = aliveList.get(i);
+			//Creates a duplicate of the AliveSet in the model to prevent concurrent modification
+			HashSet<Point> aliveSet = new HashSet<>(model.getAliveSet());
+			for (Point p : aliveSet) {
 				g.fillRect(p.x, p.y, rowWidth, rowHeight);
 			}
 		} catch (Exception e) {
