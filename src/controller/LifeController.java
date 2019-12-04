@@ -120,13 +120,6 @@ public class LifeController implements ActionListener, MouseListener {
 
 	//Advances the game one move/tick
 	public void advanceOneTick() {
-		
-		//Stops the thread and/or does nothing if there are no alive spots
-		if (_model.getAliveSet().isEmpty()) {
-			_view.updateMessage("There are no alive spots");
-			stopGame();
-			return;
-		}
 
 		// Scans board and designates which spots survive
 		_model.setSetBoard(false);
@@ -200,6 +193,7 @@ public class LifeController implements ActionListener, MouseListener {
 	private void randPopulate() {
 		// If the game has already started, do nothing
 		if (!_model.isSetBoard()) {
+			_view.promptReset();
 			return;
 		}
 		Board board = _view.getBoard();
