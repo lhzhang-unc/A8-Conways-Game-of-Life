@@ -22,7 +22,8 @@ import model.LifeModel;
 public class SettingDialog extends JDialog implements ActionListener {
 
 	private LifeController _controller;
-	private JSpinner _sizeSpinner;
+	private JSpinner _heightSpinner;
+	private JSpinner _widthSpinner;
 	private JSpinner _lowBirthSpinner;
 	private JSpinner _highBirthSpinner;
 	private JSpinner _lowSurviveSpinner;
@@ -35,6 +36,7 @@ public class SettingDialog extends JDialog implements ActionListener {
 		super();
 
 		_controller = controller;
+		setTitle("Settings");
 		LifeModel model = _controller.getModel();
 		int lowBirthThreshold = model.getLowBirthThreshold();
 		int highBirthThreshold = model.getHighBirthThreshold();
@@ -48,25 +50,29 @@ public class SettingDialog extends JDialog implements ActionListener {
 		panel.setBorder(new EmptyBorder(10, 10, 10, 10));
 
 		//Creates the number models for the JSpinners
-		_sizeSpinner = new JSpinner(new SpinnerNumberModel(model.getBoardSize(), // initial value
+		_heightSpinner = new JSpinner(new SpinnerNumberModel(model.getBoardHeight(), // initial value
+				10, // min
+				500, // max
+				1));
+		_widthSpinner = new JSpinner(new SpinnerNumberModel(model.getBoardWidth(), // initial value
 				10, // min
 				500, // max
 				1));
 		_lowBirthSpinner = new JSpinner(new SpinnerNumberModel(lowBirthThreshold, // initial value
 				0, // min
-				lowBirthThreshold + 10, // max
+				6, // max
 				1)); // step
 		_highBirthSpinner = new JSpinner(new SpinnerNumberModel(highBirthThreshold, // initial value
 				0, // min
-				highBirthThreshold + 10, // max
+				6, // max
 				1));
 		_lowSurviveSpinner = new JSpinner(new SpinnerNumberModel(lowSurviveThreshold, // initial value
 				0, // min
-				lowSurviveThreshold + 10, // max
+				6, // max
 				1));
 		_highSurviveSpinner = new JSpinner(new SpinnerNumberModel(highSurviveThreshold, // initial value
 				0, // min
-				highSurviveThreshold + 10, // max
+				6, // max
 				1));
 		_sleepSpinner = new JSpinner(new SpinnerNumberModel(model.getSleepTimer(), // initial value
 				0, // min
@@ -82,8 +88,11 @@ public class SettingDialog extends JDialog implements ActionListener {
 
 		// Add Labels, JSpinners, and JCheckboxes to the frame (and spaces between objects)
 		panel.add(Box.createRigidArea(new Dimension(0, 10)));
-		panel.add(new JLabel("Square Dimensions: (10-500)"));
-		panel.add(_sizeSpinner);
+		panel.add(new JLabel("Height: (10-500)"));
+		panel.add(_heightSpinner);
+		panel.add(Box.createRigidArea(new Dimension(0, 10)));
+		panel.add(new JLabel("Width: (10-500)"));
+		panel.add(_widthSpinner);
 		panel.add(Box.createRigidArea(new Dimension(0, 10)));
 		panel.add(new JLabel("Low Birth Threshold:"));
 		panel.add(_lowBirthSpinner);
@@ -109,12 +118,13 @@ public class SettingDialog extends JDialog implements ActionListener {
 		this.add(panel);
 	}
 
-	//If the new parameters are acceptible, they are passed to the controller to update the model
+	//If the new parameters are acceptable, they are passed to the controller to update the model
 	//Otherwise, they are rejected and the user is prompted as needed
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-		int size = (int) _sizeSpinner.getValue();
+		int height = (int) _heightSpinner.getValue();
+		int width = (int) _widthSpinner.getValue();
 		int lowBirth = (int) _lowBirthSpinner.getValue();
 		int highBirth = (int) _highBirthSpinner.getValue();
 		int lowSurvive = (int) _lowSurviveSpinner.getValue();
@@ -122,7 +132,7 @@ public class SettingDialog extends JDialog implements ActionListener {
 		int sleepTimer = (int) _sleepSpinner.getValue();
 		if (lowBirth <= highBirth && lowSurvive <= highSurvive) {
 			this.setVisible(false);
-			_controller.updateSetting(size, lowBirth, highBirth, lowSurvive, highSurvive, sleepTimer,
+			_controller.updateSetting(height, width, lowBirth, highBirth, lowSurvive, highSurvive, sleepTimer,
 					_torusMode.isSelected());
 		} else {
 			JOptionPane.showMessageDialog(this, "Your lower values are higher than they are supposed to be", "Error",

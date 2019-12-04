@@ -6,6 +6,8 @@ import java.util.HashSet;
 public class LifeModel {
 
 	private int _boardSize;
+	private int _boardHeight;
+	private int _boardWidth;
 	private boolean _setBoard;
 	private int _lowBirthThreshold;
 	private int _highBirthThreshold;
@@ -20,11 +22,11 @@ public class LifeModel {
 	private static final int DEFAULT_SCREEN_HEIGHT = 500;
 	private int _rowHeight;
 	private int _rowWidth;
-	private HashSet<Point> _highlightSet;
 
 	public LifeModel() {
 
-		setBoardSize(10);
+		setBoardHeight(10);
+		setBoardWidth(10);
 		_setBoard = true;
 		_lowBirthThreshold = 2;
 		_highBirthThreshold = 3;
@@ -34,17 +36,6 @@ public class LifeModel {
 		setSleepTimer(10);
 		_aliveGrid = new boolean[_boardSize][_boardSize];
 		_aliveSet = new HashSet<Point>();
-		setHighlightSet(new HashSet<Point>());
-	}
-
-	public int getBoardSize() {
-		return _boardSize;
-	}
-
-	public void setBoardSize(int boardSize) {
-		_boardSize = boardSize;
-		_rowHeight = (int) (LifeModel.getDefaultScreenHeight() / boardSize);
-		_rowWidth = (int) (LifeModel.getDefaultScreenWidth() / boardSize);
 	}
 
 	public boolean isSetBoard() {
@@ -143,12 +134,23 @@ public class LifeModel {
 		return _rowWidth;
 	}
 
-	public HashSet<Point> getHighlightSet() {
-		return _highlightSet;
+	public int getBoardHeight() {
+		return _boardHeight;
 	}
 
-	public void setHighlightSet(HashSet<Point> highlightSet) {
-		_highlightSet = highlightSet;
+	public void setBoardHeight(int boardHeight) {
+		_boardHeight = boardHeight;
+		_rowHeight = (int) (LifeModel.getDefaultScreenHeight() / boardHeight);
+	}
+
+	public int getBoardWidth() {
+		return _boardWidth;
+	}
+
+	public void setBoardWidth(int boardWidth) {
+		_boardWidth = boardWidth;
+		_rowWidth = (int) (LifeModel.getDefaultScreenWidth() / boardWidth);
+
 	}
 
 }

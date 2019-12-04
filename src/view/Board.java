@@ -34,11 +34,11 @@ public class Board extends JPanel {
 
 		g.setColor(Color.gray);
 
-		for (int i = 0; i < model.getBoardSize(); i++) {
+		for (int i = 0; i < model.getBoardWidth(); i++) {
 			g.drawLine(i * rowWidth, 0, i * rowWidth, LifeModel.getDefaultScreenHeight());
 		}
 
-		for (int i = 0; i < model.getBoardSize(); i++) {
+		for (int i = 0; i < model.getBoardHeight(); i++) {
 			g.drawLine(0, i * rowHeight, LifeModel.getDefaultScreenWidth(), i * rowHeight);
 		}
 

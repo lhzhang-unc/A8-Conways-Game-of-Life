@@ -115,5 +115,10 @@ public class LifeWidget extends JPanel {
 		_controller.stopGame();
 		JOptionPane.showMessageDialog(this, "Please press the Restart Button to add a new pattern");
 	}
+	
+	public void involuntaryReset() {
+		
+		JOptionPane.showMessageDialog(this, "The setting change prompted the game to reset");
+	}
 
 }

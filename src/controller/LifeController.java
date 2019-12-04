@@ -56,6 +56,11 @@ public class LifeController implements ActionListener, MouseListener {
 		case LifeWidget.ADVANCE_COMMAND:
 			//Changes the message to notify the user that the game is running
 			_view.updateMessage("The Game is Running, Press Restart to select a new pattern");
+			//If the thread is running stop it and then do nothing
+			if (_model.isRunning()) {
+				stopGame();
+				return;
+			}
 			advanceOneTick();
 			break;
 		case LifeWidget.RAND_COMMAND:
@@ -74,7 +79,7 @@ public class LifeController implements ActionListener, MouseListener {
 
 		stopGame();
 		JDialog settings = new SettingDialog(this);
-		settings.setSize(250, 400);
+		settings.setSize(250, 500);
 		settings.setLocationRelativeTo(_view);
 		settings.setVisible(true);
 	}
@@ -84,18 +89,21 @@ public class LifeController implements ActionListener, MouseListener {
 
 		stopGame();
 		_model.setSetBoard(true);
-		_model.setAliveGrid(new boolean[_model.getBoardSize()][_model.getBoardSize()]);
+		_model.setAliveGrid(new boolean[_model.getBoardHeight()][_model.getBoardWidth()]);
 		_model.setAliveSet(new HashSet<Point>());
 		_view.resetBoard();
 	}
 
 	//Updates the model with information returned by the setting dialog
-	public void updateSetting(int boardSize, int lowBirth, int highBirth, int lowSurvive, int highSurvive,
+	public void updateSetting(int boardHeight, int boardWidth, int lowBirth, int highBirth, int lowSurvive, int highSurvive,
 			int sleepTimer, boolean torusMode) {
 
-		if (boardSize != _model.getBoardSize()) {
-			_model.setBoardSize(boardSize);
-			_model.setAliveGrid(new boolean[boardSize][boardSize]);
+		if (boardHeight != _model.getBoardHeight() || boardWidth != _model.getBoardWidth()) {
+			_model.setBoardHeight(boardHeight);
+			_model.setBoardWidth(boardWidth);
+			_model.setAliveGrid(new boolean[boardHeight][boardWidth]);
+			resetGame();
+			_view.involuntaryReset();
 		}
 		_model.setLowBirthThreshold(lowBirth);
 		_model.setHighBirthThreshold(highBirth);
@@ -121,8 +129,8 @@ public class LifeController implements ActionListener, MouseListener {
 		_model.getAliveSet().clear();
 		int rowHeight = _model.getRowHeight();
 		int rowWidth = _model.getRowWidth();
-		for (int i = 0; i < _model.getBoardSize(); i++) {
-			for (int j = 0; j < _model.getBoardSize(); j++) {
+		for (int i = 0; i < _model.getBoardWidth(); i++) {
+			for (int j = 0; j < _model.getBoardHeight(); j++) {
 				int numAlive = countPop(i, j);
 				if (_model.getAliveGrid()[j][i] && numAlive <= _model.getHighBirthThreshold()
 						&& numAlive >= _model.getLowBirthThreshold()) {
@@ -137,8 +145,8 @@ public class LifeController implements ActionListener, MouseListener {
 		}
 		//Repaints the board and updates the array that keeps track of the state of all the cells
 		_view.getBoard().repaint();
-		for (int i = 0; i < _model.getBoardSize(); i++) {
-			for (int j = 0; j < _model.getBoardSize(); j++) {
+		for (int i = 0; i < _model.getBoardWidth(); i++) {
+			for (int j = 0; j < _model.getBoardHeight(); j++) {
 				if (_model.getAliveSet().contains(new Point(i * rowWidth, j * rowHeight))) {
 					_model.getAliveGrid()[j][i] = true;
 				} else {
@@ -161,18 +169,18 @@ public class LifeController implements ActionListener, MouseListener {
 	private int isAliveSpot(int x, int y) {
 
 		if (_model.isTorusMode()) {
-			if (x >= _model.getBoardSize()) {
-				x -= _model.getBoardSize();
+			if (x >= _model.getBoardWidth()) {
+				x -= _model.getBoardWidth();
 			} else if (x < 0) {
-				x += _model.getBoardSize();
+				x += _model.getBoardWidth();
 			}
-			if (y >= _model.getBoardSize()) {
-				y -= _model.getBoardSize();
+			if (y >= _model.getBoardHeight()) {
+				y -= _model.getBoardHeight();
 			} else if (y < 0) {
-				y += _model.getBoardSize();
+				y += _model.getBoardHeight();
 			}
 		}
-		if (x >= 0 && x < _model.getBoardSize() && y >= 0 && y < _model.getBoardSize()) {
+		if (x >= 0 && x < _model.getBoardWidth() && y >= 0 && y < _model.getBoardHeight()) {
 			if (_model.getAliveGrid()[y][x]) {
 				return 1;
 			}
@@ -193,11 +201,11 @@ public class LifeController implements ActionListener, MouseListener {
 		// Resets the board before filling
 		resetGame();
 
-		int numPops = _model.getBoardSize() + (int) (Math.random() * ((_model.getBoardSize() * _model.getBoardSize()) - _model.getBoardSize()));
+		int numPops = _model.getBoardWidth() + (int) (Math.random() * ((_model.getBoardHeight() * _model.getBoardWidth()) - _model.getBoardWidth()));
 
 		for (int i = 0; i < numPops; i++) {
-			int x = (int) (Math.random() * (_model.getBoardSize())) * rowWidth;
-			int y = (int) (Math.random() * (_model.getBoardSize())) * rowHeight;
+			int x = (int) (Math.random() * (_model.getBoardWidth())) * rowWidth;
+			int y = (int) (Math.random() * (_model.getBoardHeight())) * rowHeight;
 			_model.getAliveSet().add(new Point(x, y));
 			_model.getAliveGrid()[(int) y / rowHeight][(int) x / rowWidth] = true;
 		}
@@ -249,8 +257,8 @@ public class LifeController implements ActionListener, MouseListener {
 			_view.promptReset();
 			return;
 		}
-		else if (e.getX() > _model.getBoardSize() * rowWidth
-				|| e.getY() > _model.getBoardSize() * rowHeight) {
+		else if (e.getX() > _model.getBoardWidth() * rowWidth
+				|| e.getY() > _model.getBoardHeight() * rowHeight) {
 			return;
 		}
 		
@@ -268,7 +276,7 @@ public class LifeController implements ActionListener, MouseListener {
 		_view.getBoard().repaint();
 	}
 
-	//The below methods do nothing but must be implemented due to the interface
+	//The below methods do nothing but still must be implemented due to the interface
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// Do nothing
