@@ -57,13 +57,10 @@ public class Board extends JPanel {
 				g.fillRect(p.x, p.y, rowWidth, rowHeight);
 			}
 		} catch (Exception e) {
-			//No
+			//Catches Concurrent Execution Exception that occurs when the program can't
+			//finish reading the HashSet before it needs to do it again
+			e.printStackTrace();
 		}
-//		g.setColor(Color.BLACK);
-//		HashSet<Point> aliveSet = model.getAliveSet();
-//		for (Point p : aliveSet) {
-//			g.fillRect(p.x, p.y, rowWidth, rowHeight);
-//		}
 
 	}
 
