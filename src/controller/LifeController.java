@@ -6,7 +6,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.HashSet;
-import java.util.concurrent.CompletableFuture;
 
 import javax.swing.AbstractButton;
 import javax.swing.JDialog;
@@ -135,8 +134,6 @@ public class LifeController implements ActionListener, MouseListener {
 				} else if (!_model.getAliveGrid()[j][i] && numAlive <= _model.getHighSurviveThreshold()
 						&& numAlive >= _model.getLowSurviveThreshold()) {
 					_model.getAliveSet().add(new Point(i * rowWidth + widthOffset, j * rowHeight + heightOffset));
-				} else {
-					_model.getAliveSet().remove(new Point(i * rowWidth + widthOffset, j * rowHeight + heightOffset));
 				}
 			}
 		}
@@ -242,7 +239,6 @@ public class LifeController implements ActionListener, MouseListener {
 			try {
 				Thread.sleep(_model.getSleepTimer());
 			} catch (InterruptedException e) {
-
 				e.printStackTrace();
 			}
 		}
