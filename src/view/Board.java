@@ -29,6 +29,9 @@ public class Board extends JPanel {
 		
 		int boardHeight = rowHeight * model.getBoardHeight();
 		int boardWidth = rowWidth * model.getBoardWidth();
+		
+		int heightOffset = model.getHeightOffset();
+		int widthOffset = model.getWidthOffset();
 
 		g.setColor(Color.gray);
 		g.drawRect(0, 0, LifeModel.getDefaultScreenWidth(), LifeModel.getDefaultScreenHeight());
@@ -37,12 +40,14 @@ public class Board extends JPanel {
 
 		g.setColor(Color.gray);
 
+		//Draw Columns
 		for (int i = 0; i < model.getBoardWidth(); i++) {
-			g.drawLine(i * rowWidth, 0, i * rowWidth, boardHeight);
+			g.drawLine(widthOffset + i * rowWidth, heightOffset, widthOffset + i * rowWidth, heightOffset + boardHeight);
 		}
 
+		//Draw Rows
 		for (int i = 0; i < model.getBoardHeight(); i++) {
-			g.drawLine(0, i * rowHeight, boardWidth, i * rowHeight);
+			g.drawLine(widthOffset, heightOffset + i * rowHeight, widthOffset + boardWidth, heightOffset + i * rowHeight);
 		}
 
 		g.setColor(Color.BLACK);

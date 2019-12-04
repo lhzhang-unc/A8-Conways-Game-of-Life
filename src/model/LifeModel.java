@@ -22,6 +22,8 @@ public class LifeModel {
 	private static final int DEFAULT_SCREEN_HEIGHT = 500;
 	private int _rowHeight;
 	private int _rowWidth;
+	private int _heightOffset;
+	private int _widthOffset;
 
 	public LifeModel() {
 
@@ -141,6 +143,7 @@ public class LifeModel {
 	public void setBoardHeight(int boardHeight) {
 		_boardHeight = boardHeight;
 		_rowHeight = (int) (LifeModel.getDefaultScreenHeight() / boardHeight);
+		_heightOffset = (int) ((getDefaultScreenHeight() - (_rowHeight * boardHeight)) / 2);
 	}
 
 	public int getBoardWidth() {
@@ -150,7 +153,15 @@ public class LifeModel {
 	public void setBoardWidth(int boardWidth) {
 		_boardWidth = boardWidth;
 		_rowWidth = (int) (LifeModel.getDefaultScreenWidth() / boardWidth);
+		_widthOffset = (int) ((getDefaultScreenWidth() - (_rowWidth * boardWidth)) / 2);
+	}
 
+	public int getHeightOffset() {
+		return _heightOffset;
+	}
+
+	public int getWidthOffset() {
+		return _widthOffset;
 	}
 
 }

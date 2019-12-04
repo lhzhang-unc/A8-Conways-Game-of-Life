@@ -129,17 +129,20 @@ public class LifeController implements ActionListener, MouseListener {
 		_model.getAliveSet().clear();
 		int rowHeight = _model.getRowHeight();
 		int rowWidth = _model.getRowWidth();
+		
+		int heightOffset = _model.getHeightOffset();
+		int widthOffset = _model.getWidthOffset();
 		for (int i = 0; i < _model.getBoardWidth(); i++) {
 			for (int j = 0; j < _model.getBoardHeight(); j++) {
 				int numAlive = countPop(i, j);
 				if (_model.getAliveGrid()[j][i] && numAlive <= _model.getHighBirthThreshold()
 						&& numAlive >= _model.getLowBirthThreshold()) {
-					_model.getAliveSet().add(new Point(i * rowWidth, j * rowHeight));
+					_model.getAliveSet().add(new Point(i * rowWidth + widthOffset, j * rowHeight + heightOffset));
 				} else if (!_model.getAliveGrid()[j][i] && numAlive <= _model.getHighSurviveThreshold()
 						&& numAlive >= _model.getLowSurviveThreshold()) {
-					_model.getAliveSet().add(new Point(i * rowWidth, j * rowHeight));
+					_model.getAliveSet().add(new Point(i * rowWidth + widthOffset, j * rowHeight + heightOffset));
 				} else {
-					_model.getAliveSet().remove(new Point(i * rowWidth, j * rowHeight));
+					_model.getAliveSet().remove(new Point(i * rowWidth + widthOffset, j * rowHeight + heightOffset));
 				}
 			}
 		}
@@ -147,7 +150,7 @@ public class LifeController implements ActionListener, MouseListener {
 		_view.getBoard().repaint();
 		for (int i = 0; i < _model.getBoardWidth(); i++) {
 			for (int j = 0; j < _model.getBoardHeight(); j++) {
-				if (_model.getAliveSet().contains(new Point(i * rowWidth, j * rowHeight))) {
+				if (_model.getAliveSet().contains(new Point(i * rowWidth + widthOffset, j * rowHeight + heightOffset))) {
 					_model.getAliveGrid()[j][i] = true;
 				} else {
 					_model.getAliveGrid()[j][i] = false;
@@ -198,6 +201,9 @@ public class LifeController implements ActionListener, MouseListener {
 		Board board = _view.getBoard();
 		int rowHeight = _model.getRowHeight();
 		int rowWidth = _model.getRowWidth();
+		
+		int heightOffset = _model.getHeightOffset();
+		int widthOffset = _model.getWidthOffset();
 		// Resets the board before filling
 		resetGame();
 
@@ -206,7 +212,7 @@ public class LifeController implements ActionListener, MouseListener {
 		for (int i = 0; i < numPops; i++) {
 			int x = (int) (Math.random() * (_model.getBoardWidth())) * rowWidth;
 			int y = (int) (Math.random() * (_model.getBoardHeight())) * rowHeight;
-			_model.getAliveSet().add(new Point(x, y));
+			_model.getAliveSet().add(new Point(x + widthOffset, y + heightOffset));
 			_model.getAliveGrid()[(int) y / rowHeight][(int) x / rowWidth] = true;
 		}
 
@@ -252,26 +258,32 @@ public class LifeController implements ActionListener, MouseListener {
 		
 		int rowHeight = _model.getRowHeight();
 		int rowWidth = _model.getRowWidth();
+		
+		int heightOffset = _model.getHeightOffset();
+		int widthOffset = _model.getWidthOffset();
+		
 		//Checks whether the game is in the "set pattern" stage or if the mouse is within the bounds of the board
 		if (!_model.isSetBoard()) {
 			_view.promptReset();
 			return;
 		}
-		else if (e.getX() > _model.getBoardWidth() * rowWidth
-				|| e.getY() > _model.getBoardHeight() * rowHeight) {
+		else if (e.getX() > _model.getBoardWidth() * rowWidth + widthOffset
+				|| e.getY() > _model.getBoardHeight() * rowHeight + heightOffset
+				|| e.getX() < widthOffset
+				|| e.getY() < heightOffset) {
 			return;
 		}
 		
-		int x = (int) (e.getX() / rowWidth);
-		int y = (int) (e.getY() / rowHeight);
+		int x = (int) ((e.getX() - widthOffset) / rowWidth);
+		int y = (int) ((e.getY() - heightOffset) / rowHeight);
 
 		boolean[][] aliveGrid = _model.getAliveGrid();
 		HashSet<Point> aliveSet = _model.getAliveSet();
 		aliveGrid[y][x] = !aliveGrid[y][x];
 		if (aliveGrid[y][x]) {
-			aliveSet.add(new Point(x * rowWidth, y * rowHeight));
+			aliveSet.add(new Point(x * rowWidth + widthOffset, y * rowHeight + heightOffset));
 		} else {
-			aliveSet.remove(new Point(x * rowWidth, y * rowHeight));
+			aliveSet.remove(new Point(x * rowWidth + widthOffset, y * rowHeight + heightOffset));
 		}
 		_view.getBoard().repaint();
 	}
