@@ -88,10 +88,10 @@ public class SettingDialog extends JDialog implements ActionListener {
 
 		// Add Labels, JSpinners, and JCheckboxes to the frame (and spaces between objects)
 		panel.add(Box.createRigidArea(new Dimension(0, 10)));
-		panel.add(new JLabel("Height: (10-500)"));
+		panel.add(new JLabel("Number Rows: (10-500)"));
 		panel.add(_heightSpinner);
 		panel.add(Box.createRigidArea(new Dimension(0, 10)));
-		panel.add(new JLabel("Width: (10-500)"));
+		panel.add(new JLabel("Number Columns: (10-500)"));
 		panel.add(_widthSpinner);
 		panel.add(Box.createRigidArea(new Dimension(0, 10)));
 		panel.add(new JLabel("Low Birth Threshold:"));
