@@ -52,9 +52,7 @@ public class Board extends JPanel {
 		}
 
 		g.setColor(Color.BLACK);
-		
-		Iterator<Point> it = model.getAliveSet().iterator();
-		
+				
 		try {
 			HashSet<Point> aliveSet = model.getAliveSet();
 			for (Point p : aliveSet) {
