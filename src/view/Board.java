@@ -28,9 +28,11 @@ public class Board extends JPanel {
 		int rowHeight = model.getRowHeight();
 		int rowWidth = model.getRowWidth();
 		
+		//The actual size of the board after integer division
 		int boardHeight = rowHeight * model.getBoardHeight();
 		int boardWidth = rowWidth * model.getBoardWidth();
 		
+		//Allows the board to displayed in the middle of the panel
 		int heightOffset = model.getHeightOffset();
 		int widthOffset = model.getWidthOffset();
 
@@ -54,6 +56,7 @@ public class Board extends JPanel {
 		g.setColor(Color.BLACK);
 				
 		try {
+			//Fills alive Rectangles
 			HashSet<Point> aliveSet = model.getAliveSet();
 			for (Point p : aliveSet) {
 				g.fillRect(p.x, p.y, rowWidth, rowHeight);

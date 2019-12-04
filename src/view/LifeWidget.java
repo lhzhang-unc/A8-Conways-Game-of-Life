@@ -18,7 +18,8 @@ public class LifeWidget extends JPanel {
 	private JLabel _message; // Holds message to be displayed
 	private LifeController _controller;
 	private Board _board;
-
+	
+	//Action commands
 	public static final String RESET_COMMAND = "RESET_COMMAND";
 	public static final String RAND_COMMAND = "RAND_COMMAND";
 	public static final String SETTING_COMMAND = "SETTING_COMMAND";
