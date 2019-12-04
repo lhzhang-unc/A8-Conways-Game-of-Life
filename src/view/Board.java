@@ -57,6 +57,7 @@ public class Board extends JPanel {
 				
 		try {
 			//Fills alive Rectangles
+			//Creates a duplicate of the AliveSet in the model to prevent concurrent modification
 			HashSet<Point> aliveSet = new HashSet<>(model.getAliveSet());
 			for (Point p : aliveSet) {
 				g.fillRect(p.x, p.y, rowWidth, rowHeight);
