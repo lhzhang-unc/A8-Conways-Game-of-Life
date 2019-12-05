@@ -24,6 +24,8 @@ public class Board extends JPanel {
 	}
 
 	public void paint(Graphics g) {
+		
+		long s = System.nanoTime();
 
 		LifeModel model = _controller.getModel();
 		int rowHeight = model.getRowHeight();
@@ -46,27 +48,23 @@ public class Board extends JPanel {
 		g.setColor(Color.gray);
 
 		//Draw Columns
-		for (int i = 0; i < model.getBoardWidth(); i++) {
+		for (int i = 0; i <= model.getBoardWidth(); i++) {
 			g.drawLine(widthOffset + i * rowWidth, heightOffset, widthOffset + i * rowWidth, heightOffset + boardHeight);
 		}
 
 		//Draw Rows
-		for (int i = 0; i < model.getBoardHeight(); i++) {
+		for (int i = 0; i <= model.getBoardHeight(); i++) {
 			g.drawLine(widthOffset, heightOffset + i * rowHeight, widthOffset + boardWidth, heightOffset + i * rowHeight);
 		}
 
 		g.setColor(Color.BLACK);		
-		try {
-			//Fills alive Rectangles
-			//Creates a duplicate of the AliveSet in the model to reduce concurrent modification
-			ArrayList<Point> aliveList = new ArrayList<>(model.getAliveSet());
-			for (int i = 0; i < aliveList.size(); i++) {
-				Point p = aliveList.get(i);
-				g.fillRect(p.x, p.y, rowWidth, rowHeight);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
+		ArrayList<Point> aliveList = new ArrayList<>(model.getAliveSet());
+		for (int i = 0; i < aliveList.size(); i++) {
+			Point p = aliveList.get(i);
+			g.fillRect(p.x, p.y, rowWidth, rowHeight);
 		}
+		
+		System.out.println(System.nanoTime() - s);
 
 	}
 

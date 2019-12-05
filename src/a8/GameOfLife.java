@@ -9,7 +9,7 @@ import controller.LifeController;
 import model.LifeModel;
 import view.LifeWidget;
 
-public class LifeGame {
+public class GameOfLife {
 
 	//Used to start the game, outside of MVC
 	public static void main(String[] args) {
