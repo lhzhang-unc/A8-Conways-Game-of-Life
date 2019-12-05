@@ -25,8 +25,6 @@ public class Board extends JPanel {
 
 	public void paint(Graphics g) {
 		
-		long s = System.nanoTime();
-
 		LifeModel model = _controller.getModel();
 		int rowHeight = model.getRowHeight();
 		int rowWidth = model.getRowWidth();
@@ -63,9 +61,6 @@ public class Board extends JPanel {
 			Point p = aliveList.get(i);
 			g.fillRect(p.x, p.y, rowWidth, rowHeight);
 		}
-		
-		System.out.println(System.nanoTime() - s);
-
 	}
 
 	public void addMouseListener(MouseAdapter listener) {
