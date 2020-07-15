@@ -55,7 +55,7 @@ public class LifeController implements ActionListener, MouseListener {
 			break;
 		case LifeWidget.ADVANCE_COMMAND:
 			//Changes the message to notify the user that the game is running
-			_view.updateMessage("The Game is Running, Press Restart to select a new pattern");
+			_view.updateMessage("The Game is Running, Press Restart for a new pattern");
 			//If the thread is running stop it and then do nothing
 			if (_model.isRunning()) {
 				stopGame();
@@ -68,7 +68,7 @@ public class LifeController implements ActionListener, MouseListener {
 			break;
 		case LifeWidget.START_COMMAND:
 			//Changes the message to notify the user that the game is running
-			_view.updateMessage("The Game is Running, Press Restart to select a new pattern");
+			_view.updateMessage("The Game is Running, Press Restart for a new pattern");
 			StartStop((AbstractButton) e.getSource());
 			break;
 		}
